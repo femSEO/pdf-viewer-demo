@@ -4,87 +4,56 @@
   <title>Velkommen!</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: #fafafa;
+      min-height: 100vh;
+      position: relative;
+    }
     #pdf-viewer {
       width: 100%;
       height: 600px;
       border: 1px solid #bbb;
       overflow: auto;
+      background: #fff;
     }
-    canvas {
-      display: block;
-      margin: 0 auto;
-    }
-  </style>
-</head>
-<body>
-  <h1>Rønde Højskole Performance Efterår '25</h1>
-  <div id="pdf-viewer"></div>
-  <script>
-    // Use an online PDF for web hosting, local file won't work in browser
-    const url = 'Flyer.pdf';
-    const pdfjsLib = window['pdfjs-dist/build/pdf'];
-
-    pdfjsLib.GlobalWorkerOptions.workerSrc =
-      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-
-    pdfjsLib.getDocument(url).promise.then(pdf => {
-      pdf.getPage(1).then(page => {
-        const scale = 1.5;
-        const viewport = page.getViewport({ scale });
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d');
-        canvas.height = viewport.height;
-        canvas.width = viewport.width;
-        document.getElementById('pdf-viewer').appendChild(canvas);
-
-        page.render({ canvasContext: context, viewport });
-      });
-    });
-  </script>
-</body>
-</html>
---new code for a linking button--
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Velkommen!</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-  <style>
-    #pdf-viewer {
+    .bottom-bar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
       width: 100%;
-      height: 600px;
-      border: 1px solid #bbb;
-      overflow: auto;
-    }
-    canvas {
-      display: block;
-      margin: 0 auto;
-    }
-    .link-button {
-      display: inline-block;
-      padding: 10px 18px;
-      margin: 12px 0;
       background: #1976d2;
+      text-align: center;
+      padding: 18px 0;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
+    }
+    .bottom-bar a {
       color: #fff;
       text-decoration: none;
-      border-radius: 6px;
+      font-size: 1.2em;
       font-weight: bold;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-      transition: background 0.2s;
-    }
-    .link-button:hover {
+      padding: 10px 30px;
+      border-radius: 24px;
       background: #1565c0;
+      transition: background 0.2s;
+      display: inline-block;
+    }
+    .bottom-bar a:hover {
+      background: #0d47a1;
     }
   </style>
 </head>
 <body>
-  <h1>Rønde Højskole Performance Efterår '25</h1>
-  <a class="link-button" href="https://your-link-url.com" target="_blank">Læse mere&nbsp;&rarr;</a>
+  <h1 style="text-align:center;">Rønde Højskole Performance Efterår '25</h1>
   <div id="pdf-viewer"></div>
+  <div class="bottom-bar">
+    <a href="Flyer2.pdf" target="_blank">Læse mere&nbsp;&rarr;</a>
+  </div>
   <script>
     const url = 'Flyer.pdf';
     const pdfjsLib = window['pdfjs-dist/build/pdf'];
-
     pdfjsLib.GlobalWorkerOptions.workerSrc =
       'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
@@ -97,7 +66,6 @@
         canvas.height = viewport.height;
         canvas.width = viewport.width;
         document.getElementById('pdf-viewer').appendChild(canvas);
-
         page.render({ canvasContext: context, viewport });
       });
     });
