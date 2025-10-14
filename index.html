@@ -72,3 +72,136 @@
   </script>
 </body>
 </html>
+
+--expanding PDF size on display--
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Velkommen!</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: sans-serif;
+      background: #fafafa;
+      width: 100%;
+      min-height: 100vh;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      position: relative;
+    }
+    h1 {
+      text-align: center;
+      margin: 0;
+      padding: 18px 0 0 0;
+      flex: 0 0 auto;
+      background: #fafafa;
+      z-index: 2;
+    }
+    #pdf-viewer {
+      flex: 1 1 auto;
+      width: 100vw;
+      height: 100vh;
+      background: #fff;
+      border: none;
+      overflow: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+    #pdf-viewer canvas {
+      width: 100vw !important;
+      height: 100vh !important;
+      max-width: 100vw !important;
+      max-height: 100vh !important;
+      display: block;
+      margin: 0;
+      background: #fff;
+      object-fit: contain;
+    }
+    .bottom-bar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      background: #1976d2;
+      text-align: center;
+      padding: 18px 0;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
+      z-index: 10;
+    }
+    .bottom-bar a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.2em;
+      font-weight: bold;
+      padding: 10px 30px;
+      border-radius: 24px;
+      background: #1565c0;
+      transition: background 0.2s;
+      display: inline-block;
+    }
+    .bottom-bar a:hover {
+      background: #0d47a1;
+    }
+  </style>
+</head>
+<body>
+  <h1>Rønde Højskole Performance Efterår '25</h1>
+  <div id="pdf-viewer"></div>
+  <div class="bottom-bar">
+    <a href="Flyer2.pdf" target="_blank">Læse mere&nbsp;&rarr;</a>
+  </div>
+  <script>
+    const url = 'Flyer.pdf';
+    const pdfjsLib = window['pdfjs-dist/build/pdf'];
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+    function resizeAndRender(page, canvas) {
+      // Get the current viewport size
+      const viewer = document.getElementById('pdf-viewer');
+      const width = viewer.clientWidth;
+      const height = viewer.clientHeight;
+
+      // Calculate scale to fill the viewer
+      const viewport = page.getViewport({ scale: 1 });
+      const scale = Math.min(width / viewport.width, height / viewport.height);
+
+      const scaledViewport = page.getViewport({ scale });
+      canvas.width = scaledViewport.width;
+      canvas.height = scaledViewport.height;
+
+      page.render({ canvasContext: canvas.getContext('2d'), viewport: scaledViewport });
+    }
+
+    pdfjsLib.getDocument(url).promise.then(pdf => {
+      pdf.getPage(1).then(page => {
+        const canvas = document.createElement('canvas');
+        canvas.style.width = "100vw";
+        canvas.style.height = "100vh";
+        canvas.style.maxWidth = "100vw";
+        canvas.style.maxHeight = "100vh";
+        document.getElementById('pdf-viewer').appendChild(canvas);
+
+        function render() {
+          resizeAndRender(page, canvas);
+        }
+
+        window.addEventListener('resize', render);
+        render();
+      });
+    });
+  </script>
+</body>
+</html>
