@@ -167,34 +167,40 @@
 
 
     // Render first PDF (Flyer.pdf)
-    pdfjsLib.getDocument('Flyer.pdf').promise.then(pdf => {
-      pdf.getPage(1).then(page => {
-        const container = document.getElementById('pdf-viewer');
-        const canvas = document.createElement('canvas');
-        container.appendChild(canvas);
+   pdfjsLib.getDocument('Flyer.pdf').promise
+  .then(pdf => {
+    pdf.getPage(1).then(page => {
+      const container = document.getElementById('pdf-viewer');
+      const canvas = document.createElement('canvas');
+      container.appendChild(canvas);
 
-        function render() {
-          resizeAndRender(page, canvas, container);
-        }
-        window.addEventListener('resize', render);
-        render();
-      });
+      function render() {
+        resizeAndRender(page, canvas, container);
+      }
+      window.addEventListener('resize', render);
+      render();
     });
+  })
+  .catch(err => console.error("Failed to load Flyer.pdf:", err));
+    
 
     // Render second PDF (Flyer2.pdf)
-    pdfjsLib.getDocument('Flyer2.pdf').promise.then(pdf => {
-      pdf.getPage(1).then(page => {
-        const container = document.getElementById('pdf-viewer-2');
-        const canvas = document.createElement('canvas');
-        container.appendChild(canvas);
+    pdfjsLib.getDocument('Flyer2.pdf').promise
+  .then(pdf => {
+    pdf.getPage(1).then(page => {
+      const container = document.getElementById('pdf-viewer-2');
+      const canvas = document.createElement('canvas');
+      container.appendChild(canvas);
 
-        function render() {
-          resizeAndRender(page, canvas, container);
-        }
-        window.addEventListener('resize', render);
-        render();
-      });
+      function render() {
+        resizeAndRender(page, canvas, container);
+      }
+      window.addEventListener('resize', render);
+      render();
     });
+  })
+  .catch(err => console.error("Failed to load Flyer2.pdf:", err));
+    
   </script>
 </body>
 </html>
