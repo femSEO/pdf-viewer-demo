@@ -5,6 +5,16 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Oswald:400,700&display=swap" rel="stylesheet">
   <style>
+    html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Oswald', sans-serif;
+  background: #1d5973; /* Set a constant background color */
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
   
     body {
       display: flex;
@@ -142,15 +152,6 @@
       page.render({ canvasContext: canvas.getContext('2d'), viewport: scaledViewport });
     }
 
-    <html>
-  <script>
-    function changeBackgroundColor() {
-      // Example: change to light blue
-      document.body.style.background = "#1d5973";
-    }
-  </script>
-</body>
-</html>
 
     // Render first PDF (Flyer.pdf)
     pdfjsLib.getDocument('Flyer.pdf').promise.then(pdf => {
