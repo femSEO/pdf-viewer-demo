@@ -82,6 +82,18 @@
       object-fit: contain;
       box-sizing: border-box;
     }
+    
+    @media (max-width: 600px) {
+  .pdf-container {
+    height: auto;
+    padding: 10px;
+  }
+  .pdf-container canvas {
+    width: 100% !important;
+    height: auto !important;
+  }
+}
+
     .bottom-bar {
       position: fixed;
       left: 0;
