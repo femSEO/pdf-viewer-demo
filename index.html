@@ -140,6 +140,7 @@
   <div id="pdf-viewers-wrapper">
     <div id="pdf-viewer" class="pdf-container"></div>
     <div id="pdf-viewer-2" class="pdf-container"></div>
+    <div id="pdf-viewer-4" class="pdf-container"></div>
   </div>
   <div class="bottom-bar">
     <a href="Flyer3.pdf" target="_blank">click her for bar menuen&nbsp;&rarr;</a>
@@ -200,6 +201,24 @@
     });
   })
   .catch(err => console.error("Failed to load Flyer2.pdf:", err));
+
+
+     // Render second PDF (Flyer4.pdf)
+    pdfjsLib.getDocument('Flyer4.pdf').promise
+  .then(pdf => {
+    pdf.getPage(1).then(page => {
+      const container = document.getElementById('pdf-viewer-4');
+      const canvas = document.createElement('canvas');
+      container.appendChild(canvas);
+
+      function render() {
+        resizeAndRender(page, canvas, container);
+      }
+      window.addEventListener('resize', render);
+      render();
+    });
+  })
+  .catch(err => console.error("Failed to load Flyer4.pdf:", err));
     
   </script>
 </body>
