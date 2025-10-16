@@ -135,6 +135,24 @@
         max-width: 100vw !important;
       }
     }
+
+    .star {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  font-size: 24px;
+  color: gold;
+  animation: fall 2s linear forwards;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
   </style>
 </head>
 <body>
@@ -221,7 +239,16 @@
     });
   })
   .catch(err => console.error("Failed to load Flyer4.pdf:", err));
-    
-  </script>
+
+    <script>
+  window.addEventListener('scroll', () => {
+    const star = document.createElement('div');
+    star.className = 'star';
+    star.textContent = '★';
+    star.style.left = Math.random() * window.innerWidth + 'px';
+    document.body.appendChild(star);
+    setTimeout(() => star.remove(), 2000);
+  });
+</script>
 </body>
 </html>
